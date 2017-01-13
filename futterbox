@@ -1,0 +1,32 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:       futterbox
+# Required-Start: $remote_fs $network
+# Required-Stop:
+# Default-Start:  3 4 5
+# Default-Stop:   0 1 2 6
+# Short-Description: Futterbox sensor handler, starts WLAN also
+### END INIT INFO
+
+# this file is /etc/init.d/futterbox
+
+# Some things that run always
+/root/startFutterbox
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting script futterbox "
+    echo "not yet implemented"
+    ;;
+  stop)
+    echo "Stopping script blah"
+    echo "not yet implemented"
+    ;;
+  *)
+    echo "Usage: /etc/init.d/blah {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
