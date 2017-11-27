@@ -91,7 +91,18 @@ io.on('connection', function (socket) {
     });
 });
 
+setInterval(checkSensor, 1000);
+
 setInterval(runLed, 100);
+
+function checkSensor() {
+    // read sensor
+    var value = b.digitalRead(sensorIn);
+    // set/reset led blinking
+    blink = (value == b.LOW)
+    
+    console.log('Input changed to ' + value);
+}
 
 function runLed() {
     if (isOn) {
