@@ -93,7 +93,7 @@ io.on('connection', function (socket) {
 
 setInterval(checkSensor, 1000);
 
-setInterval(runLed, 100);
+setInterval(runLed, 500);
 
 function checkSensor() {
     // read sensor
