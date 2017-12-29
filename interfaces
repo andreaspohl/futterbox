@@ -8,8 +8,11 @@ auto lo
 iface lo inet loopback
 
 # The primary network interface
-#auto eth0
-#iface eth0 inet dhcp
+auto eth0
+iface eth0 inet static
+address 192.168.2.80
+netmask 255.255.255.0
+gateway 192.168.2.1
 # Example to keep MAC address between reboots
 #hwaddress ether DE:AD:BE:EF:CA:FE
 
@@ -37,7 +40,7 @@ iface wlan0 inet static
 #connmanctl> scan wifi
 #connmanctl> services
 #connmanctl> agent on
-#connmanctl> connect wifi_e84e0634f73a_41414141_managed_psk
+#connmanctl> connect wifi_74da38d00bc5_41414141_managed_psk
 #connmanctl> quit
 
 # Ethernet/RNDIS gadget (g_ether)
