@@ -27,7 +27,7 @@ b.digitalWrite(sensorOut, b.HIGH);
 var blink = false;
 
 // read sensor to initialize correctly
-b.digitalRead(sensorIn, init);
+var lastValue = b.digitalRead(sensorIn, init);
 
 function init(x) {
     blink = (x.value == b.LOW); // if sensor is closed, LED must blink
@@ -40,7 +40,7 @@ b.digitalWrite(ledOut, b.LOW);
 // Initialize the server on port 8888
 var server = http.createServer(function (req, res) {
     // requesting files
-    var file = '.'+((req.url=='/')?'/index.html':req.url);
+    var file = ((req.url=='/')?'/var/lib/cloud9/futterbox/index.html':req.url);
     var fileExtension = path.extname(file);
     var contentType = 'text/html';
     // Uncoment if you want to add css to your web page
@@ -61,18 +61,18 @@ var server = http.createServer(function (req, res) {
         else{
             // Page not found
             res.writeHead(404);
-            res.end('Page not found');
+            res.end('Page not found: '+file);
         }
     })
 }).listen(8888);
 
 // Loading socket io module
-var io = require('socket.io').listen(server);
+var io = require('/usr/lib/node_modules/socket.io').listen(server);
 
+/*    
 // When communication is established, attach interrupt
 
 io.on('connection', function (socket) {
-    
     b.attachInterrupt(sensorIn, true, b.CHANGE, function(x) {
     
         // on 'connection' x is undefined, because it was called by the server, not the interrupt
@@ -90,18 +90,28 @@ io.on('connection', function (socket) {
         console.log('Input changed to ' + x.value);
     });
 });
+*/
 
 setInterval(checkSensor, 1000);
 
 setInterval(runLed, 500);
 
 function checkSensor() {
+
     // read sensor
     var value = b.digitalRead(sensorIn);
+
     // set/reset led blinking
-    blink = (value == b.LOW)
+    blink = (value == b.LOW);
     
-    console.log('Input changed to ' + value);
+    // update server
+    io.sockets.emit('button_event', ((value == b.HIGH) ? 'black' : 'red' ) );
+    
+    if (value != lastValue) {
+        console.log('Input changed to ' + value);
+    }
+    lastValue = value;
+    
 }
 
 function runLed() {
