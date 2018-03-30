@@ -1,9 +1,8 @@
 #!/bin/bash
-# /root/startFutterbox
 # starts wifi after boot
 
 echo "delay starting wifi"
-sleep 30
+sleep 60
 echo "starting wifi...."
 
 ip link set wlan0 down
@@ -13,9 +12,5 @@ connmanctl enable wifi
 connmanctl connect wifi_74da38d00bc5_41414141_managed_psk
 
 echo "wifi started."
+exit 0
 
-# start Futterbox Server
-export NODE_PATH=/usr/local/lib/node_modules
-cd /var/lib/cloud9/futterbox
-node server.js &
-echo "Futterbox server started."
