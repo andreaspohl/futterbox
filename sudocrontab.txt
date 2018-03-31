@@ -21,7 +21,10 @@
 # 
 # m h  dom mon dow   command
 #
-#0 * * * * systemctl restart connman >> /var/log/mycron.log 2>&1
 #
+# restart Wifi after reboot, and ping to keep it alive
 @reboot sh /var/lib/cloud9/futterbox/startWifi.sh >> /var/log/mycron.log 2>&1
 @reboot ping 10.0.1.1 -i 30 >> /var/log/mycron.log 2>&1
+#
+# reboot every night at 2 a.m.
+0 2 * * * systemctl reboot
