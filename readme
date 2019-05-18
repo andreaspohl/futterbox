@@ -1,0 +1,17 @@
+Installation von Homebridge:
+https://smartapfel.de/homebridge/
+
+Installation des Homebridge Plugins:
+https://www.npmjs.com/package/homebridge-http-garagedoor
+
+Files für Futterbox auf dem RPI
+/etc/systemd/system/futterbox.service
+/usr/local/bin/futterbox.py
+
+Fehler, weil /dev/input/event4 in Gruppe input ist, User homebridge aber nicht:
+groups homebridge (listet die Gruppen von homebridge)
+ls -l /dev/input/event4 (listet die Gruppe von even4)
+sudo addgroup homebridge input
+
+NodeMcu File (wird mit Arduino IDE geladen):
+??

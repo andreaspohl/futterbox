@@ -1,0 +1,68 @@
+{
+    "bridge": {
+        "name": "RPI",
+        "username": "CC:22:3D:E3:CE:32",
+        "port": 51826,
+        "pin": "031-45-155"
+    },
+    "description": "Home Smart Home",
+    "platforms": [
+        {
+            "platform": "config",
+            "name": "Config",
+            "port": 8080,
+            "auth": "form",
+            "theme": "red",
+            "restart": "sudo -n systemctl restart homebridge",
+            "temp": "/sys/class/thermal/thermal_zone0/temp",
+            "sudo": true,
+            "log": {
+                "method": "systemd",
+                "service": "homebridge"
+            }
+        }
+    ],
+    "accessories": [
+        {
+            "accessory": "Http-GarageDoor",
+            "name": "Futterbox",
+            "username": "",
+            "password": "",
+            "immediately": false,
+            "polling": true,
+            "pollInterval": 5000,
+            "http_method": "POST",
+            "urls": {
+                "readCurrentState": {
+                    "url": "http://10.0.1.200/futterbox/state",
+                    "body": ""
+                },
+                "readTargetState": {
+                    "url": "http://10.0.1.200/futterbox/target",
+                    "body": ""
+                },
+                "open": {
+                    "url": "http://localhost/garage/setstate",
+                    "body": "OPEN"
+                },
+                "close": {
+                    "url": "http://localhost/garage/setstate",
+                    "body": "CLOSED"
+                }
+            },
+            "mappers": [
+                {
+                    "type": "static",
+                    "parameters": {
+                        "mapping": {
+                            "OPEN": "0",
+                            "CLOSED": "1",
+                            "OPENING": "2",
+                            "CLOSING": "3"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
