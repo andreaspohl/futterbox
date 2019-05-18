@@ -1,0 +1,14 @@
+[Unit]
+Description=Futterbox Status Display
+After=syslog.target network-online.target
+ 
+[Service]
+Type=simple
+User=homebridge
+ExecStart=/usr/bin/python /usr/local/bin/futterbox.py
+Restart=on-failure
+RestartSec=10
+KillMode=process
+ 
+[Install]
+WantedBy=multi-user.target
