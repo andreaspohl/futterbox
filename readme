@@ -14,4 +14,4 @@ ls -l /dev/input/event4 (listet die Gruppe von even4)
 sudo addgroup homebridge input
 
 NodeMcu File (wird mit Arduino IDE geladen):
-??
+arduino/futterbox.ino
